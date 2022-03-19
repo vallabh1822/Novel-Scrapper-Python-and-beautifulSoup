@@ -1,4 +1,4 @@
-# Novel-Scrapper-With-Python-and-beautifulSoup
+# Novel-Scraper-With-Python-and-beautifulSoup
 Scrape a Novel from BoxNovel.com and Save it in EPUB format
 Download all files in module upload them to jupyter lab,
 open Box_Novel.ipynb in jupyter lab,
