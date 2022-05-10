@@ -12,6 +12,7 @@ import requests
 import pypandoc
 import re
 import time
+from IPython.display import clear_output
 
 
 
@@ -33,7 +34,7 @@ def convertToEpub(doc,nameOfNovel):
 
 
 
-def BoxNovelScrape(StartChapter:int =1, EndChapter:int =2, name="ANOTHER WORLDâ€™S VERSATILE CRAFTING MASTER"):
+def BoxNovelScrape(StartChapter:int =1, EndChapter:int =2, name="ANOTHER WORLDâ€™S VERSATILE CRAFTING MASTER",time_delay=10):
     doc = BeautifulSoup()
 
     doc.append(Doctype('html'))
@@ -59,7 +60,7 @@ def BoxNovelScrape(StartChapter:int =1, EndChapter:int =2, name="ANOTHER WORLDâ€
     for i in range (StartChapter, EndChapter):
         url ="https://boxnovel.com/novel/"+nameOfNovel+"/chapter-{}/".format(i)
         r1= requests.get(url)
-        time.sleep(random.randint(2,11))
+        time.sleep(random.random()*time_delay)
         chapter=r1.content
         soup1 = BeautifulSoup(chapter, 'html5lib')
         chapter_con = soup1.find_all('p')
@@ -67,13 +68,16 @@ def BoxNovelScrape(StartChapter:int =1, EndChapter:int =2, name="ANOTHER WORLDâ€
         header = doc.new_tag('h1')
         header.string = "chapter {}".format(i)
         body.append(header)
-
-
+        clear_output()
+        print((i+1-StartChapter)*100/(EndChapter-StartChapter)  , '% Completed')
+        
         # Append content to html
         for i, child in enumerate(chapter_con):
                 if child==chapter_con[-21]:
                     break
                 body.append(child)
+       
+
     
     name = name + " {}-{}".format(StartChapter, EndChapter)
     output = convertToEpub(doc, name)
