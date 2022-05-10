@@ -34,7 +34,7 @@ def convertToEpub(doc,nameOfNovel):
 
 
 
-def BoxNovelScrape(StartChapter:int =1, EndChapter:int =2, name="ANOTHER WORLDâ€™S VERSATILE CRAFTING MASTER",time_delay=10):
+def BoxNovelScrape(StartChapter:int =1, EndChapter:int =2, name="ANOTHER WORLDâ€™S VERSATILE CRAFTING MASTER", delay=20):
     doc = BeautifulSoup()
 
     doc.append(Doctype('html'))
@@ -60,7 +60,7 @@ def BoxNovelScrape(StartChapter:int =1, EndChapter:int =2, name="ANOTHER WORLDâ€
     for i in range (StartChapter, EndChapter):
         url ="https://boxnovel.com/novel/"+nameOfNovel+"/chapter-{}/".format(i)
         r1= requests.get(url)
-        time.sleep(random.random()*time_delay)
+        time.sleep(random.random()*delay)
         chapter=r1.content
         soup1 = BeautifulSoup(chapter, 'html5lib')
         chapter_con = soup1.find_all('p')
@@ -69,7 +69,7 @@ def BoxNovelScrape(StartChapter:int =1, EndChapter:int =2, name="ANOTHER WORLDâ€
         header.string = "chapter {}".format(i)
         body.append(header)
         clear_output()
-        print((i+1-StartChapter)*100/(EndChapter-StartChapter)  , '% Completed')
+        print(int((i+1-StartChapter)*100/(EndChapter-StartChapter) ) , '% Completed')
         
         # Append content to html
         for i, child in enumerate(chapter_con):
